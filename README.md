@@ -2,6 +2,7 @@
 
 ### A Data-Driven Analytics Solution
 
+[![Project Site](https://img.shields.io/badge/Live-Project%20Site-7c3aed?style=for-the-badge&logo=githubpages&logoColor=white)](https://ganesh79810.github.io/final/)
 [![Live Dashboard](https://img.shields.io/badge/Live-Analytics%20Dashboard-2563eb?style=for-the-badge&logo=googlechrome&logoColor=white)](https://ganesh79810.github.io/MRP_DASHBOARD/)
 [![Solution Prototype](https://img.shields.io/badge/Live-Solution%20Prototype-22c55e?style=for-the-badge&logo=figma&logoColor=white)](https://ganesh79810.github.io/prototype/)
 [![Course](https://img.shields.io/badge/Course-IS%205960-orange?style=flat-square)](#)
@@ -85,6 +86,7 @@ device knows about it.
 
 ### 🔗 Live Links
 
+- 🌐 **Project Site:** [ganesh79810.github.io/final](https://ganesh79810.github.io/final/)
 - 📊 **Analytics Dashboard:** [ganesh79810.github.io/MRP_DASHBOARD](https://ganesh79810.github.io/MRP_DASHBOARD/)
 - 🖼️ **Solution Prototype:** [ganesh79810.github.io/prototype](https://ganesh79810.github.io/prototype/)
 
@@ -130,23 +132,30 @@ framework across four layers:
 | ⚙️ **Application Layer** | Data Ingestion → Analytics Engine → Visualization → Dashboard UI |
 | 🖥️ **Technology Layer** | GitHub, GitHub Pages, Python, Chart.js, CSV/JSON data interchange |
 
-### 🗂️ Entity Relationship Diagram (ERD) Summary
+### 🗂️ Entity Relationship Diagram (ERD) Summary — City of Riverton Parking Dataset
 
 ```text
-┌──────────────┐        ┌───────────────┐        ┌──────────────┐
-│   PERMITS    │ 1    * │   CITATIONS   │ 1    * │   DISPUTES   │
-├──────────────┤───────▶├───────────────┤───────▶├──────────────┤
-│ permit_id PK │        │ citation_id PK│        │ dispute_id PK│
-│ resident_id  │        │ permit_id  FK │        │ citation_id FK│
-│ zone         │        │ officer_id    │        │ filed_date   │
-│ status       │        │ issue_date    │        │ status       │
-│ approved_at  │        │ sync_latency  │        │ outcome      │
-│ synced_at    │        │ is_erroneous  │        │ dismissal    │
-└──────────────┘        └───────────────┘        └──────────────┘
+┌────────────────────────┐          ┌──────────────────────────────┐          ┌───────────────────────────┐
+│        PERMITS         │          │          CITATIONS           │          │         DISPUTES          │
+├────────────────────────┤          ├──────────────────────────────┤          ├───────────────────────────┤
+│ • Permit ID            │          │ • Citation ID                │          │ • Dispute ID              │
+│ • Vehicle Plate        │          │ • Vehicle Plate              │          │ • Citation ID             │
+│ • Applicant Type       │          │ • Citation DateTime          │          │ • Dispute Filed           │
+│ • Parking Zone         │          │ • Parking Zone               │          │ • Dispute Filed Date      │
+│ • Permit Submission Dt │          │ • Officer ID                 │          │ • Dispute Resolution Date │
+│ • Permit Approval Date │          │ • Device Sync Latency (min)  │          │ • Dispute Outcome         │
+│ • Permit Status        │          │ • Permit Visible On Device   │          │ • Dispute Resolution Days │
+└──────────┬─────────────┘          │ • Erroneous Citation         │          │ • Admin Handling Time(min)│
+           │                        │ • Citation Amount            │          └─────────────┬─────────────┘
+           │   Vehicle_Plate (1)    │ • Payment Status             │   Citation ID (1)      │
+           └───────────────────────▶└──────────────┬───────────────┘◀──────────────────────┘
+                                                    ▲
+                                                    │
+                                          (joins back to DISPUTES)
 
 Relationships:
-  • One PERMIT   → many CITATIONS  (a permit may be cited multiple times before sync)
-  • One CITATION → many DISPUTES   (a citation may generate one or more dispute records)
+  • PERMITS  ⇄ CITATIONS   joined on Vehicle_Plate  (1:1 lookup — links a citation back to its source permit)
+  • CITATIONS ⇄ DISPUTES   joined on Citation ID    (1:1 lookup — links a dispute back to the citation that triggered it)
 ```
 
 ---
